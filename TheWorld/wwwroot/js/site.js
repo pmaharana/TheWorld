@@ -51,6 +51,15 @@
 (function () {
 
     let $sidebarAndWrapper = $("#sidebar,#wrapper"); //gets both the elements. called a wrapped set of DOM elements
+                                                        //wrapped set of DOM elements
+    $("#sidebarToggle").on("click", function () {
+        $sidebarAndWrapper.toggleClass("hide-sidebar");   
+        if ($sidebarAndWrapper.hasClass("hide-sidebar")) {
+            $(this).text("Show sidebar");
+        }
+        else {
+            $(this).text("Hide Sidebar");
+        }
+    })
 
-    $sidebarAndWrapper.toggleClass("hide-sidebar");
 })();

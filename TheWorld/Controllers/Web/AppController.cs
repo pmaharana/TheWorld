@@ -6,16 +6,19 @@ using System.Text;
 using System.Threading.Tasks;
 using TheWorld.ViewModels;
 using TheWorld.Services;
+using Microsoft.Extensions.Configuration;
 
 namespace TheWorld.Controllers.Web
 {
     public class AppController : Controller
     {
         private IMailService _mailService;
+        private IConfigurationRoot _config;
 
-        public AppController(IMailService mailService)
+        public AppController(IMailService mailService, IConfigurationRoot config)
         {
             _mailService = mailService;
+            _config = config;
         }
 
         public IActionResult Index()
@@ -31,7 +34,13 @@ namespace TheWorld.Controllers.Web
         [HttpPost]
         public IActionResult Contact(ContactViewModel model)
         {
-            _mailService.SendMail("yugi@moto.com", model.Email, "From the world", model.Message);
+            if (ModelState.IsValid)
+            {               
+                _mailService.SendMail(_config["MailSettings:ToAddress"], model.Email, "From the world", model.Message);
+                ModelState.Clear();
+                ViewBag.UserMessage = "Message Sent";
+            }
+            
             return View();
         }
 

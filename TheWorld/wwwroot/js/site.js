@@ -52,13 +52,20 @@
 
     let $sidebarAndWrapper = $("#sidebar,#wrapper"); //gets both the elements. called a wrapped set of DOM elements
                                                         //wrapped set of DOM elements
+    let $icon = $("#sidebarToggle i.fa");
+    let $button = $("#sidebarToggle");
+
     $("#sidebarToggle").on("click", function () {
+        $button.removeClass("btn btn-primary");
+        $button.addClass("btn btn-success");
         $sidebarAndWrapper.toggleClass("hide-sidebar");   
         if ($sidebarAndWrapper.hasClass("hide-sidebar")) {
-            $(this).text("Show sidebar");
+            $icon.removeClass("fa-angle-double-left fa-4x");
+            $icon.addClass("fa-angle-double-right fa-4x");
         }
         else {
-            $(this).text("Hide Sidebar");
+            $icon.removeClass("fa-angle-double-right fa-4x");
+            $icon.addClass("fa-angle-double-left fa-4x");
         }
     })
 

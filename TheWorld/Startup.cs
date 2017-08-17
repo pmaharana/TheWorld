@@ -13,6 +13,7 @@ using TheWorld.Models;
 using Newtonsoft.Json.Serialization;
 using AutoMapper;
 using TheWorld.ViewModels;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace TheWorld
 {
@@ -48,14 +49,18 @@ namespace TheWorld
                 //Implement a real Mail Service
             }
 
+            services.AddIdentity<WorldUser, IdentityRole>(config =>
+            {
+                config.User.RequireUniqueEmail = true;
+                config.Password.RequiredLength = 8;
+                config.Cookies.ApplicationCookie.LoginPath = "/Auth/Login";
+            })
+            .AddEntityFrameworkStores<WorldContext>();
+
             services.AddDbContext<WorldContext>();
-
             services.AddScoped<IWorldRepository, WorldRepository>();
-
             services.AddTransient<GeoCoordsService>();
-
             services.AddTransient<WorldContextSeedData>();
-
             services.AddLogging();
 
             services.AddMvc()
@@ -68,6 +73,13 @@ namespace TheWorld
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory,
             WorldContextSeedData seeder, ILoggerFactory factory)
         {
+
+            //ORDER MATTERS HERE LOLZ
+
+            app.UseStaticFiles();
+
+            app.UseIdentity();
+
             Mapper.Initialize(config =>
             {
                 config.CreateMap<TripViewModel, Trip>().ReverseMap();
@@ -84,7 +96,6 @@ namespace TheWorld
                 factory.AddDebug(LogLevel.Error);
             }
 
-            app.UseStaticFiles();
 
             app.UseMvc(config =>
             {

@@ -1,8 +1,13 @@
 {
   "MailSettings": {
-    "ToAddress":  "pranay.maharana@gmail.com"
+    "ToAddress": "pranay.maharana@gmail.com"
   },
+
   "ConnectionStrings": {
     "WorldContextConnection": "Server=Localhost\\SQLEXPRESS;Database=TheWorldDb;Trusted_Connection=true;MultipleActiveResultSets=true;"
+  },
+
+  "Keys": {
+    "BingKey": "DONTEVERPUTKEYSINSOURCECONTROL"
   }
 }

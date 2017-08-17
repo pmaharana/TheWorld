@@ -14,6 +14,7 @@ namespace TheWorld.Models
         void AddTrip(Trip trip);
         Task<bool> SaveChangesAsync();
         Trip GetTripByName(string tripName);
+        void AddStop(string tripName, Stop newStop);
     }
 
     public class WorldRepository : IWorldRepository
@@ -52,6 +53,15 @@ namespace TheWorld.Models
             return (await _context.SaveChangesAsync()) > 0;
         }
 
+        public void AddStop(string tripName, Stop newStop)
+        {
+            var trip = GetTripByName(tripName);
 
+            if (trip != null)
+            {
+                trip.Stops.Add(newStop);
+                _context.Stops.Add(newStop);
+            }
+        }
     }
 }

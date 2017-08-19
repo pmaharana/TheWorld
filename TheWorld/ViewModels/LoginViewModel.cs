@@ -13,6 +13,6 @@ namespace TheWorld.ViewModels
         public string Username { get; set; }
 
         [Required]
-        public int Password { get; set; }
+        public string Password { get; set; }
     }
 }

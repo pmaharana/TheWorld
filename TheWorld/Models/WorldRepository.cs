@@ -11,10 +11,15 @@ namespace TheWorld.Models
     public interface IWorldRepository
     {
         IEnumerable<Trip> GetAllTrips();
-        void AddTrip(Trip trip);
-        Task<bool> SaveChangesAsync();
+        IEnumerable<Trip> GetTripsByUserName(string userName);
         Trip GetTripByName(string tripName);
-        void AddStop(string tripName, Stop newStop);
+        Trip GetUserTripByName(string tripName, string userName);
+
+        void AddTrip(Trip trip);
+        void AddStop(string tripName, Stop newStop, string userName);
+
+        Task<bool> SaveChangesAsync();
+
     }
 
     public class WorldRepository : IWorldRepository
@@ -53,15 +58,30 @@ namespace TheWorld.Models
             return (await _context.SaveChangesAsync()) > 0;
         }
 
-        public void AddStop(string tripName, Stop newStop)
+        public void AddStop(string tripName, Stop newStop, string userName)
         {
-            var trip = GetTripByName(tripName);
+            var trip = GetUserTripByName(tripName, userName);
 
             if (trip != null)
             {
                 trip.Stops.Add(newStop);
                 _context.Stops.Add(newStop);
             }
+        }
+
+        public IEnumerable<Trip> GetTripsByUserName(string userName)
+        {
+            return _context.Trips
+                .Include(x => x.Stops)
+                .Where(x => x.UserName == userName).ToList();
+        }
+
+        public Trip GetUserTripByName(string tripName, string userName)
+        {
+            return _context.Trips
+                .Include(x => x.Stops)
+                .Where(x => x.UserName == userName && x.Name == tripName)
+                .FirstOrDefault();
         }
     }
 }

@@ -31,8 +31,6 @@ namespace TheWorld.Models
                 await _userManager.CreateAsync(user, "P@ssw0rd!");
             }
 
-
-
                 if (!_context.Trips.Any())
             {
                 var usTrip = new Trip()

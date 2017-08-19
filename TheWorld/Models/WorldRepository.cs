@@ -73,7 +73,8 @@ namespace TheWorld.Models
         {
             return _context.Trips
                 .Include(x => x.Stops)
-                .Where(x => x.UserName == userName).ToList();
+                .Where(x => x.UserName == userName)
+                .OrderBy(x => x.Name).ToList();
         }
 
         public Trip GetUserTripByName(string tripName, string userName)

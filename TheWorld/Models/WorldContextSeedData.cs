@@ -24,14 +24,14 @@ namespace TheWorld.Models
             {
                 var user = new WorldUser()
                 {
-                    UserName = "yugikinfogames",
+                    UserName = "yugikingofgames",
                     Email = "yugi.moto@theworld.com"
                 };
 
                 await _userManager.CreateAsync(user, "P@ssw0rd!");
             }
 
-                if (!_context.Trips.Any())
+            if (!_context.Trips.Any())
             {
                 var usTrip = new Trip()
                 {
@@ -57,7 +57,7 @@ namespace TheWorld.Models
                 {
                     DateCreated = DateTime.UtcNow,
                     Name = "World Trip",
-                    UserName = "", //TODO Add Username,
+                    UserName = "yugikingofgames",
                     Stops = new List<Stop>
                     {
                         new Stop() { Order = 0, Latitude =  33.748995, Longitude =  -84.387982, Name = "Atlanta, Georgia", Arrival = DateTime.Parse("Jun 3, 2014") },

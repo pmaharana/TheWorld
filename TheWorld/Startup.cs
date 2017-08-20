@@ -67,7 +67,7 @@ namespace TheWorld
             services.AddIdentity<WorldUser, IdentityRole>(config =>
             {
                 config.User.RequireUniqueEmail = true;
-                config.Password.RequiredLength = 8;
+                config.Password.RequiredLength = 6;
                 config.Cookies.ApplicationCookie.LoginPath = "/Auth/Login";
                 config.Cookies.ApplicationCookie.Events = new CookieAuthenticationEvents()
                 {
@@ -89,9 +89,9 @@ namespace TheWorld
             .AddEntityFrameworkStores<WorldContext>();
 
             services.AddDbContext<WorldContext>();
+            services.AddTransient<WorldContextSeedData>();
             services.AddScoped<IWorldRepository, WorldRepository>();
             services.AddTransient<GeoCoordsService>();
-            services.AddTransient<WorldContextSeedData>();
             services.AddLogging();
 
            }

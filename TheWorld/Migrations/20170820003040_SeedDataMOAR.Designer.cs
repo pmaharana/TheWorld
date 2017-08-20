@@ -8,8 +8,8 @@ using TheWorld.Models;
 namespace TheWorld.Migrations
 {
     [DbContext(typeof(WorldContext))]
-    [Migration("20170817011705_IdentityClasses")]
-    partial class IdentityClasses
+    [Migration("20170820003040_SeedDataMOAR")]
+    partial class SeedDataMOAR
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
